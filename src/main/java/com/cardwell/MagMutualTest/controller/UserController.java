@@ -3,6 +3,7 @@ package com.cardwell.MagMutualTest.controller;
 import com.cardwell.MagMutualTest.model.User;
 import com.cardwell.MagMutualTest.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,7 +63,9 @@ public class UserController {
     }
 
     @GetMapping("/date-range")
-    public ResponseEntity<List<User>> getUsersByDateRange(@RequestParam("startDate") Date startDate, @RequestParam("endDate") Date endDate) {
+    public ResponseEntity<List<User>> getUsersByDateRange(
+            @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam("endDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
         List<User> users = userRepository.findByDateCreatedBetween(startDate, endDate);
         if (!users.isEmpty()) {
             return new ResponseEntity<>(users, HttpStatus.OK);
