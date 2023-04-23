@@ -45,7 +45,7 @@ public class UserController {
     @GetMapping("/name")
     public ResponseEntity<List<User>> getUsersByName(@RequestParam("firstName") String firstName,
                                                      @RequestParam("lastName") String lastName) {
-        List<User> users = userRepository.findByFirstNameAndLastName(firstName, lastName);
+        List<User> users = userRepository.findByFirstNameIgnoreCaseAndLastNameIgnoreCase(firstName, lastName);
         if (!users.isEmpty()) {
             return new ResponseEntity<>(users, HttpStatus.OK);
         } else {
@@ -55,7 +55,7 @@ public class UserController {
 
     @GetMapping("/profession")
     public ResponseEntity<List<User>> getUsersByProfession(@RequestParam("profession") String profession) {
-        List<User> users = userRepository.findByProfession(profession);
+        List<User> users = userRepository.findByProfessionIgnoreCase(profession);
         if (!users.isEmpty()) {
             return new ResponseEntity<>(users, HttpStatus.OK);
         } else {
@@ -100,6 +100,18 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable String id) {
         userRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/byLocation")
+    public List<User> getUsersByLocation(@RequestParam(required = false) String city,
+                                         @RequestParam(required = false) String country) {
+        if (city != null) {
+            return userRepository.findByCityIgnoreCase(city);
+        } else if (country != null) {
+            return userRepository.findByCountryIgnoreCase(country);
+        } else {
+            throw new IllegalArgumentException("Either city or country must be provided.");
+        }
     }
 
 }
