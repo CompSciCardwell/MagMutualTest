@@ -11,11 +11,15 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
 
-    List<User> findByFirstNameAndLastName(String firstName, String lastName);
+    List<User> findByFirstNameIgnoreCaseAndLastNameIgnoreCase(String firstName, String lastName);
 
-    List<User> findByProfession(String profession);
+    List<User> findByProfessionIgnoreCase(String profession);
 
     List<User> findByDateCreatedBetween(Date startDate, Date endDate);
 
     Optional<User> findById(int id);
+
+    List<User> findByCountryIgnoreCase(String country);
+
+    List<User> findByCityIgnoreCase(String city);
 }
