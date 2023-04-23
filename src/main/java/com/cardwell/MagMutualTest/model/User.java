@@ -13,7 +13,7 @@ import java.util.Date;
 public class User {
 
     @Id
-    private String id;
+    private int id;
 
     private String firstName;
     private String lastName;
@@ -29,7 +29,7 @@ public class User {
     public User() {
     }
 
-    public User(String id, String firstName, String lastName, String email, String profession, Date dateCreated, String country, String city) {
+    public User(int id, String firstName, String lastName, String email, String profession, Date dateCreated, String country, String city) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,11 +41,11 @@ public class User {
     }
 
     // Getters and setters
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
