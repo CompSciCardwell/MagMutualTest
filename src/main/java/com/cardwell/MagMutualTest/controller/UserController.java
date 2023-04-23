@@ -26,12 +26,14 @@ public class UserController {
     }
 
     // READ operations
+    @CrossOrigin(origins = "*")
     @GetMapping("/")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userRepository.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable int id) {
         User user = userRepository.findById(id).orElse(null);
@@ -42,6 +44,7 @@ public class UserController {
         }
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/name")
     public ResponseEntity<List<User>> getUsersByName(@RequestParam("firstName") String firstName,
                                                      @RequestParam("lastName") String lastName) {
@@ -53,6 +56,7 @@ public class UserController {
         }
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/profession")
     public ResponseEntity<List<User>> getUsersByProfession(@RequestParam("profession") String profession) {
         List<User> users = userRepository.findByProfessionIgnoreCase(profession);
@@ -63,6 +67,7 @@ public class UserController {
         }
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/date-range")
     public ResponseEntity<List<User>> getUsersByDateRange(
             @RequestParam("startDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
@@ -101,7 +106,7 @@ public class UserController {
         userRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
+    @CrossOrigin(origins = "*")
     @GetMapping("/byLocation")
     public List<User> getUsersByLocation(@RequestParam(required = false) String city,
                                          @RequestParam(required = false) String country) {
