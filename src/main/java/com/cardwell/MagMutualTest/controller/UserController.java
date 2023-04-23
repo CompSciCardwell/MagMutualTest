@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable String id) {
+    public ResponseEntity<User> getUserById(@PathVariable int id) {
         User user = userRepository.findById(id).orElse(null);
         if (user != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);
@@ -42,8 +42,9 @@ public class UserController {
         }
     }
 
-    @GetMapping("/name/{firstName}/{lastName}")
-    public ResponseEntity<List<User>> getUsersByName(@PathVariable String firstName, @PathVariable String lastName) {
+    @GetMapping("/name")
+    public ResponseEntity<List<User>> getUsersByName(@RequestParam("firstName") String firstName,
+                                                     @RequestParam("lastName") String lastName) {
         List<User> users = userRepository.findByFirstNameAndLastName(firstName, lastName);
         if (!users.isEmpty()) {
             return new ResponseEntity<>(users, HttpStatus.OK);
@@ -52,8 +53,8 @@ public class UserController {
         }
     }
 
-    @GetMapping("/profession/{profession}")
-    public ResponseEntity<List<User>> getUsersByProfession(@PathVariable String profession) {
+    @GetMapping("/profession")
+    public ResponseEntity<List<User>> getUsersByProfession(@RequestParam("profession") String profession) {
         List<User> users = userRepository.findByProfession(profession);
         if (!users.isEmpty()) {
             return new ResponseEntity<>(users, HttpStatus.OK);
@@ -75,8 +76,8 @@ public class UserController {
     }
 
     // UPDATE operation
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable String id, @RequestBody User user) {
+    @PutMapping(value = "/{id}", consumes = {"application/json"})
+    public ResponseEntity<User> updateUser(@PathVariable int id, @RequestBody User user) {
         User existingUser = userRepository.findById(id).orElse(null);
         if (existingUser != null) {
             existingUser.setFirstName(user.getFirstName());

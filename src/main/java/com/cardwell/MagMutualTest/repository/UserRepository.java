@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends MongoRepository<User, String> {
@@ -16,4 +17,5 @@ public interface UserRepository extends MongoRepository<User, String> {
 
     List<User> findByDateCreatedBetween(Date startDate, Date endDate);
 
+    Optional<User> findById(int id);
 }
